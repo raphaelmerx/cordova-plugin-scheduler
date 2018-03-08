@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-background-fetch"
+    version="5.2.1">
+    <name>CDVBackgroundFetch</name>
+    <description>Cordova Background Fetch Plugin</description>
+    <license>MIT</license>
+    <repo>https://github.com/christocracy/cordova-plugin-background-fetch</repo>
+    <issue>https://github.com/christocracy/cordova-plugin-background-fetch/issues</issue>
+    <keywords>phonegap,cordova,background fetch</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module src="www/BackgroundFetch.js" name="BackgroundFetch">
+        <clobbers target="window.BackgroundFetch" />
+    </js-module>
+
+    <platform name="android">
+        <source-file src="src/android/CDVBackgroundFetch.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+        <source-file src="src/android/HeadlessBroadcastReceiver.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+        <source-file src="src/android/HeadlessJobService.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+        <source-file src="src/android/BackgroundFetchHeadlessTask.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+        <source-file src="src/android/HeadlessTask.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+
+        <source-file src="src/android/BackgroundFetch.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+        <source-file src="src/android/BackgroundFetchConfig.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+        <source-file src="src/android/FetchJobService.java" target-dir="src/com/transistorsoft/cordova/backgroundfetch" />
+
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BackgroundFetch">
+                <param name="android-package" value="com.transistorsoft.cordova.backgroundfetch.CDVBackgroundFetch"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:exported="true" android:name="com.transistorsoft.cordova.backgroundfetch.HeadlessJobService" android:permission="android.permission.BIND_JOB_SERVICE" />
+            <service android:name="com.transistorsoft.cordova.backgroundfetch.FetchJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true" />
+            
+            <receiver android:name="com.transistorsoft.cordova.backgroundfetch.HeadlessBroadcastReceiver">
+                <intent-filter>
+                    <action android:name="${applicationId}.event.BACKGROUND_FETCH" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+
+    </platform>
+
+</plugin>
