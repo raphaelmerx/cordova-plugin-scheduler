@@ -1,6 +1,6 @@
 # Cordova plugin scheduler
 
-A Cordova plugin that schedules periodic Android background tasks using the [`JobScheduler`](https://developer.android.com/reference/android/app/job/JobScheduler.html). Tasks will persist on reboot, and will only run if the network is available.
+A Cordova plugin that schedules periodic Android background tasks using the [`JobScheduler`](https://developer.android.com/reference/android/app/job/JobScheduler.html).
 
 ## Installation
 
@@ -59,6 +59,9 @@ $ adb shell dumpsys jobscheduler
 ## Notes
 
 * The same [jobId](https://developer.android.com/reference/android/app/job/JobInfo.Builder.html) (999) is used every time a job is scheduled, so former fetch handlers are overriden when you define a new fetch handler.
-* The job will not run if network is not available.
 * The job is persisted on device reboots.
 * `SchedulerPlugin.finish()` will call [`JobService.jobFinished`](https://developer.android.com/reference/android/app/job/JobService.html#jobFinished).
+
+## Credits
+
+This plugin is mostly a merge of https://github.com/transistorsoft/cordova-plugin-background-fetch and https://github.com/transistorsoft/transistor-background-fetch, with extra built-in job parameters.
