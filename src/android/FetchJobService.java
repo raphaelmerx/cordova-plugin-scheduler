@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 import android.annotation.TargetApi;
 import android.app.job.JobParameters;
@@ -13,18 +13,18 @@ public class FetchJobService extends JobService {
         CompletionHandler completionHandler = new CompletionHandler() {
             @Override
             public void finish() {
-                Log.d(BackgroundFetch.TAG, "- jobFinished");
+                Log.d(SchedulerPlugin.TAG, "- jobFinished");
                 jobFinished(params, false);
             }
         };
-        BackgroundFetch.getInstance(getApplicationContext()).onFetch(completionHandler);
+        SchedulerPlugin.getInstance(getApplicationContext()).onFetch(completionHandler);
 
         return true;
     }
 
     @Override
     public boolean onStopJob(final JobParameters params) {
-        Log.d(BackgroundFetch.TAG, "- onStopJob");
+        Log.d(SchedulerPlugin.TAG, "- onStopJob");
         jobFinished(params, false);
         return true;
     }

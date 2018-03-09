@@ -1,18 +1,33 @@
 {
-  "name": "cordova-plugin-scheduler",
-  "version": "1.0.0",
-  "description": "A Cordova plugin that schedules Android background tasks using the Android JobScheduler.",
-  "main": "index.js",
-  "scripts": {
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/raphaelmerx/cordova-plugin-scheduler.git"
-  },
-  "author": "Raphael Merx",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/raphaelmerx/cordova-plugin-scheduler/issues"
-  },
-  "homepage": "https://github.com/raphaelmerx/cordova-plugin-scheduler#readme"
+    "name": "cordova-plugin-scheduler",
+    "version": "1.0.1",
+    "description": "A Cordova plugin that schedules Android background tasks using the Android JobScheduler.",
+    "scripts": {
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/raphaelmerx/cordova-plugin-scheduler.git"
+    },
+    "keywords": [
+        "ecosystem:cordova",
+        "cordova",
+        "android",
+        "job",
+        "scheduler",
+        "network",
+        "background",
+        "fetch"
+    ],
+    "author": "Raphael Merx",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/raphaelmerx/cordova-plugin-scheduler/issues"
+    },
+    "homepage": "https://github.com/raphaelmerx/cordova-plugin-scheduler#readme",
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=6.0.0"
+        }
+    ]
 }

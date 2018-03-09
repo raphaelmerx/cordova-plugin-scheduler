@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 import android.annotation.TargetApi;
 import android.app.job.JobParameters;
@@ -12,7 +12,7 @@ public class HeadlessJobService extends JobService {
     @Override
     public boolean onStartJob(final JobParameters params) {
 
-        BackgroundFetch adapter = BackgroundFetch.getInstance(getApplicationContext());
+        SchedulerPlugin adapter = SchedulerPlugin.getInstance(getApplicationContext());
 
         if (adapter.isMainActivityActive()) {
             return true;
@@ -21,18 +21,18 @@ public class HeadlessJobService extends JobService {
         adapter.registerCompletionHandler(new FetchJobService.CompletionHandler() {
             @Override
             public void finish() {
-                Log.d(BackgroundFetch.TAG, "HeadlessJobService jobFinished");
+                Log.d(SchedulerPlugin.TAG, "HeadlessJobService jobFinished");
                 jobFinished(params, false);
             }
         });
 
-        Log.d(BackgroundFetch.TAG, "HeadlessJobService onStartJob");
-        new BackgroundFetchHeadlessTask().onFetch(getApplicationContext());
+        Log.d(SchedulerPlugin.TAG, "HeadlessJobService onStartJob");
+        new SchedulerPluginHeadlessTask().onFetch(getApplicationContext());
         return true;
     }
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.d(BackgroundFetch.TAG, "JobService onStopJob");
+        Log.d(SchedulerPlugin.TAG, "JobService onStopJob");
         jobFinished(params, false);
         return true;
     }

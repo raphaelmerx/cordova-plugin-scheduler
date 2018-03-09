@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 
-public class CDVBackgroundFetch extends CordovaPlugin {
+public class CDVSchedulerPlugin extends CordovaPlugin {
     private static final String JOB_SERVICE_CLASS = "HeadlessJobService";
 
     private boolean isForceReload = false;
@@ -23,7 +23,7 @@ public class CDVBackgroundFetch extends CordovaPlugin {
         Intent launchIntent = activity.getIntent();
         String action 		= launchIntent.getAction();
 
-        if ((action != null) && (BackgroundFetch.ACTION_FORCE_RELOAD.equalsIgnoreCase(action))) {
+        if ((action != null) && (SchedulerPlugin.ACTION_FORCE_RELOAD.equalsIgnoreCase(action))) {
             isForceReload = true;
             activity.moveTaskToBack(true);
         }
@@ -31,19 +31,19 @@ public class CDVBackgroundFetch extends CordovaPlugin {
 
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         boolean result = false;
-        if (BackgroundFetch.ACTION_CONFIGURE.equalsIgnoreCase(action)) {
+        if (SchedulerPlugin.ACTION_CONFIGURE.equalsIgnoreCase(action)) {
             result = true;
             configure(data.getJSONObject(0), callbackContext);
-        } else if (BackgroundFetch.ACTION_START.equalsIgnoreCase(action)) {
+        } else if (SchedulerPlugin.ACTION_START.equalsIgnoreCase(action)) {
             result = true;
             start(callbackContext);
-        } else if (BackgroundFetch.ACTION_STOP.equalsIgnoreCase(action)) {
+        } else if (SchedulerPlugin.ACTION_STOP.equalsIgnoreCase(action)) {
             result = true;
             stop(callbackContext);
-        } else if (BackgroundFetch.ACTION_STATUS.equalsIgnoreCase(action)) {
+        } else if (SchedulerPlugin.ACTION_STATUS.equalsIgnoreCase(action)) {
             result = true;
             callbackContext.success(getAdapter().status());
-        } else if (BackgroundFetch.ACTION_FINISH.equalsIgnoreCase(action)) {
+        } else if (SchedulerPlugin.ACTION_FINISH.equalsIgnoreCase(action)) {
             finish(callbackContext);
             result = true;
         }
@@ -51,16 +51,16 @@ public class CDVBackgroundFetch extends CordovaPlugin {
     }
 
     private void configure(JSONObject options, final CallbackContext callbackContext) throws JSONException {
-        BackgroundFetch adapter = getAdapter();
+        SchedulerPlugin adapter = getAdapter();
 
-        BackgroundFetchConfig.Builder config = new BackgroundFetchConfig.Builder();
+        SchedulerPluginConfig.Builder config = new SchedulerPluginConfig.Builder();
         if (options.has("minimumFetchInterval")) {
             config.setMinimumFetchInterval(options.getInt("minimumFetchInterval"));
         }
         if (options.has("enableHeadless") && options.getBoolean("enableHeadless")) {
             config.setJobService(getClass().getPackage().getName() + "." + JOB_SERVICE_CLASS);
         }
-        BackgroundFetch.Callback callback = new BackgroundFetch.Callback() {
+        SchedulerPlugin.Callback callback = new SchedulerPlugin.Callback() {
             @Override
             public void onFetch() {
                 PluginResult result = new PluginResult(PluginResult.Status.OK);
@@ -77,24 +77,24 @@ public class CDVBackgroundFetch extends CordovaPlugin {
 
     @TargetApi(21)
     private void start(CallbackContext callbackContext) {
-        BackgroundFetch adapter = getAdapter();
+        SchedulerPlugin adapter = getAdapter();
         adapter.start();
         callbackContext.success(adapter.status());
     }
 
     private void stop(CallbackContext callbackContext) {
-        BackgroundFetch adapter = getAdapter();
+        SchedulerPlugin adapter = getAdapter();
         adapter.stop();
         callbackContext.success();
     }
 
     private void finish(CallbackContext callbackContext) {
-        BackgroundFetch adapter = getAdapter();
+        SchedulerPlugin adapter = getAdapter();
         adapter.finish();
         callbackContext.success();
     }
 
-    private BackgroundFetch getAdapter() {
-        return BackgroundFetch.getInstance(cordova.getActivity().getApplicationContext());
+    private SchedulerPlugin getAdapter() {
+        return SchedulerPlugin.getInstance(cordova.getActivity().getApplicationContext());
     }
 }
