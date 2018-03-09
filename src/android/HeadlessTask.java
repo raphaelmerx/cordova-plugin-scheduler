@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 import android.content.Context;
 

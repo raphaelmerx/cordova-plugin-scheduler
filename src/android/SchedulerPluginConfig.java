@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class BackgroundFetchConfig {
+public class SchedulerPluginConfig {
     private Builder config;
 
     private static final int MINIMUM_FETCH_INTERVAL = 1;
@@ -29,28 +29,28 @@ public class BackgroundFetchConfig {
             return this;
         }
 
-        public BackgroundFetchConfig build() {
-            return new BackgroundFetchConfig(this);
+        public SchedulerPluginConfig build() {
+            return new SchedulerPluginConfig(this);
         }
 
-        public BackgroundFetchConfig load(Context context) {
-            SharedPreferences preferences = context.getSharedPreferences(BackgroundFetch.TAG, 0);
+        public SchedulerPluginConfig load(Context context) {
+            SharedPreferences preferences = context.getSharedPreferences(SchedulerPlugin.TAG, 0);
             if (preferences.contains("fetchInterval")) {
                 setMinimumFetchInterval(preferences.getInt("fetchInterval", minimumFetchInterval));
             }
             if (preferences.contains("jobService")) {
                 setJobService(preferences.getString("jobService", null));
             }
-            return new BackgroundFetchConfig(this);
+            return new SchedulerPluginConfig(this);
         }
     }
 
-    private BackgroundFetchConfig(Builder builder) {
+    private SchedulerPluginConfig(Builder builder) {
         config = builder;
     }
 
     public void save(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(BackgroundFetch.TAG, 0);
+        SharedPreferences preferences = context.getSharedPreferences(SchedulerPlugin.TAG, 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("minimumFetchInterval", config.minimumFetchInterval);
         editor.putString("jobService", config.jobService);

@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class BackgroundFetch {
-    public static final String TAG = "TSBackgroundFetch";
+public class SchedulerPlugin {
+    public static final String TAG = "SchedulerPluginTag";
 
     public static final String ACTION_CONFIGURE = "configure";
     public static final String ACTION_START     = "start";
@@ -31,31 +31,31 @@ public class BackgroundFetch {
 
     public static final int STATUS_AVAILABLE = 2;
 
-    private static BackgroundFetch mInstance = null;
+    private static SchedulerPlugin mInstance = null;
     private static int FETCH_JOB_ID = 999;
 
-    public static BackgroundFetch getInstance(Context context) {
+    public static SchedulerPlugin getInstance(Context context) {
         if (mInstance == null) {
             mInstance = getInstanceSynchronized(context.getApplicationContext());
         }
         return mInstance;
     }
 
-    private static synchronized BackgroundFetch getInstanceSynchronized(Context context) {
-        if (mInstance == null) mInstance = new BackgroundFetch(context.getApplicationContext());
+    private static synchronized SchedulerPlugin getInstanceSynchronized(Context context) {
+        if (mInstance == null) mInstance = new SchedulerPlugin(context.getApplicationContext());
         return mInstance;
     }
 
     private Context mContext;
-    private BackgroundFetch.Callback mCallback;
-    private BackgroundFetchConfig mConfig;
+    private SchedulerPlugin.Callback mCallback;
+    private SchedulerPluginConfig mConfig;
     private FetchJobService.CompletionHandler mCompletionHandler;
 
-    private BackgroundFetch(Context context) {
+    private SchedulerPlugin(Context context) {
         mContext = context;
     }
 
-    public void configure(BackgroundFetchConfig config, BackgroundFetch.Callback callback) {
+    public void configure(SchedulerPluginConfig config, SchedulerPlugin.Callback callback) {
         Log.d(TAG, "- configure: " + config);
         mCallback = callback;
         config.save(mContext);
@@ -64,7 +64,7 @@ public class BackgroundFetch {
     }
 
     public void onBoot() {
-        mConfig = new BackgroundFetchConfig.Builder().load(mContext);
+        mConfig = new SchedulerPluginConfig.Builder().load(mContext);
         start();
     }
 
@@ -128,7 +128,7 @@ public class BackgroundFetch {
     public void onFetch() {
         Log.d(TAG, "- Background Fetch event received");
         if (mConfig == null) {
-            mConfig = new BackgroundFetchConfig.Builder().load(mContext);
+            mConfig = new SchedulerPluginConfig.Builder().load(mContext);
         }
         if (isMainActivityActive()) {
             if (mCallback != null) {
@@ -172,14 +172,14 @@ public class BackgroundFetch {
                 }
             }
         } catch (java.lang.SecurityException e) {
-            Log.w(TAG, "TSBackgroundFetch attempted to determine if MainActivity is active but was stopped due to a missing permission.  Please add the permission 'android.permission.GET_TASKS' to your AndroidManifest.  See Installation steps for more information");
+            Log.w(TAG, "SchedulerPlugin attempted to determine if MainActivity is active but was stopped due to a missing permission.  Please add the permission 'android.permission.GET_TASKS' to your AndroidManifest.  See Installation steps for more information");
             throw e;
         }
         return isActive;
     }
 
     /**
-     * @interface BackgroundFetch.Callback
+     * @interface SchedulerPlugin.Callback
      */
     public interface Callback {
         void onFetch();

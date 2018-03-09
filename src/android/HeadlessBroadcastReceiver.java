@@ -1,4 +1,4 @@
-package com.transistorsoft.cordova.backgroundfetch;
+package com.catalpa.scheduler;
 
 
 import android.content.BroadcastReceiver;
@@ -10,11 +10,11 @@ import android.util.Log;
 public class HeadlessBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        BackgroundFetch adapter = BackgroundFetch.getInstance(context.getApplicationContext());
+        SchedulerPlugin adapter = SchedulerPlugin.getInstance(context.getApplicationContext());
         if (adapter.isMainActivityActive()) {
             return;
         }
-        Log.d(BackgroundFetch.TAG, "HeadlessBroadcastReceiver onReceive");
-        new BackgroundFetchHeadlessTask().onFetch(context.getApplicationContext());
+        Log.d(SchedulerPlugin.TAG, "HeadlessBroadcastReceiver onReceive");
+        new SchedulerPluginHeadlessTask().onFetch(context.getApplicationContext());
     }
 }
