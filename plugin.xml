@@ -31,6 +31,7 @@
         <source-file src="src/android/FetchJobService.java" target-dir="src/com/catalpa/scheduler" />
 
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="SchedulerPlugin">
                 <param name="android-package" value="com.catalpa.scheduler.CDVSchedulerPlugin"/>
@@ -39,6 +40,7 @@
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
