@@ -112,14 +112,6 @@ public class SchedulerPlugin {
         return STATUS_AVAILABLE;
     }
 
-    /**
-     * Used for Headless operation for registering completion-handler to execute #jobFinised on JobScheduler
-     * @param completionHandler
-     */
-    public void registerCompletionHandler(FetchJobService.CompletionHandler completionHandler) {
-        mCompletionHandler = completionHandler;
-    }
-
     public void onFetch(FetchJobService.CompletionHandler completionHandler) {
         mCompletionHandler = completionHandler;
         onFetch();

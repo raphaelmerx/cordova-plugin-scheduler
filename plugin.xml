@@ -3,7 +3,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-scheduler"
-    version="1.0.1">
+    version="1.1.0">
     <name>SchedulerPlugin</name>
     <description>Cordova Plugin Scheduler</description>
     <license>MIT</license>
@@ -21,10 +21,6 @@
 
     <platform name="android">
         <source-file src="src/android/CDVSchedulerPlugin.java" target-dir="src/com/catalpa/scheduler" />
-        <source-file src="src/android/HeadlessBroadcastReceiver.java" target-dir="src/com/catalpa/scheduler" />
-        <source-file src="src/android/HeadlessJobService.java" target-dir="src/com/catalpa/scheduler" />
-        <source-file src="src/android/SchedulerPluginHeadlessTask.java" target-dir="src/com/catalpa/scheduler" />
-        <source-file src="src/android/HeadlessTask.java" target-dir="src/com/catalpa/scheduler" />
 
         <source-file src="src/android/SchedulerPlugin.java" target-dir="src/com/catalpa/scheduler" />
         <source-file src="src/android/SchedulerPluginConfig.java" target-dir="src/com/catalpa/scheduler" />
@@ -44,14 +40,7 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:exported="true" android:name="com.catalpa.scheduler.HeadlessJobService" android:permission="android.permission.BIND_JOB_SERVICE" />
             <service android:name="com.catalpa.scheduler.FetchJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true" />
-            
-            <receiver android:name="com.catalpa.scheduler.HeadlessBroadcastReceiver">
-                <intent-filter>
-                    <action android:name="${applicationId}.event.BACKGROUND_FETCH" />
-                </intent-filter>
-            </receiver>
         </config-file>
 
     </platform>

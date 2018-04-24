@@ -13,8 +13,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 public class CDVSchedulerPlugin extends CordovaPlugin {
-    private static final String JOB_SERVICE_CLASS = "HeadlessJobService";
-
     private boolean isForceReload = false;
 
     @Override
@@ -56,9 +54,6 @@ public class CDVSchedulerPlugin extends CordovaPlugin {
         SchedulerPluginConfig.Builder config = new SchedulerPluginConfig.Builder();
         if (options.has("minimumFetchInterval")) {
             config.setMinimumFetchInterval(options.getInt("minimumFetchInterval"));
-        }
-        if (options.has("enableHeadless") && options.getBoolean("enableHeadless")) {
-            config.setJobService(getClass().getPackage().getName() + "." + JOB_SERVICE_CLASS);
         }
         SchedulerPlugin.Callback callback = new SchedulerPlugin.Callback() {
             @Override
